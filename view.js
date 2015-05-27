@@ -5,53 +5,68 @@
 
   var View = Game.View = function ($el) {
     this.board = new Game.Board();
-    this.$display = $el;
-    for (var i = 0; i < 60; i++) {
-      this.$display.append("<ul class='row'></ul>");
-    }
-    for (var j = 0; j < 60; j++) {
-      $(".row").append("<li class='block'></li>");
-    }
+    this.$el = $el;
+    this.setUpGrid();
     this.bindKeys();
+    this.setInt();
   };
 
-  DIR = {
-    "N": new Game.Coord(-1, 0),
-    "S": new Game.Coord(1, 0),
-    "W": new Game.Coord(0, -1),
-    "E": new Game.Coord(0, 1)
+  View.prototype.setUpGrid = function () {
+    for (var i = 0; i < 30; i++) {
+      this.$el.append("<ul class='row'></ul>");
+    }
+    for (var j = 0; j < 40; j++) {
+      $(".row").append("<li class='block'></li>");
+    }
+  };
+
+  View.prototype.setInt = function () {
+    setInterval(function() {
+      this.render();
+      this.board.snake.move();
+    }.bind(this), 150);
   };
 
   View.prototype.bindKeys = function () {
-    $(document).on("keydown", function(e) {
-      switch(e.which) {
+    $(document).on("keydown", function(event) {
+      switch(event.which) {
         case 37: // left
-          this.board.snake.turn(DIR["W"]);
+          event.preventDefault();
+          this.board.snake.turn("W");
         break;
 
         case 38: // up
-          this.board.snake.turn(DIR["N"]);
+          event.preventDefault();
+          this.board.snake.turn("N");
         break;
 
         case 39: // right
-          this.board.snake.turn(DIR["E"]);
+          event.preventDefault();
+          this.board.snake.turn("E");
         break;
 
         case 40: // down
-          this.board.snake.turn(DIR["S"]);
+          event.preventDefault();
+          this.board.snake.turn("S");
         break;
 
         default: return;
-    }
-    e.preventDefault();
-  }.bind(this))
+      }
+    }.bind(this));
   };
 
   View.prototype.render = function () {
-    this.board.render(this.$display);
-  };
+    this.$li = this.$el.find("li");
+    this.$li.filter(".snake").removeClass();
+    this.$li.filter(".apple").removeClass();
 
-  View.prototype.update = function () {
-    this.board.snake.move();
+    this.board.snake.body.forEach(function (coord) {
+      var flatCoord = (coord.x * this.board.maxX) + coord.y;
+      this.$li.eq(flatCoord).addClass("snake");
+    }.bind(this));
+
+    var appleCoords = this.board.apple.pos;
+    var appleFlatCoords = (appleCoords.x * this.board.maxX) + appleCoords.y;
+    this.$li.eq(appleFlatCoords).addClass("apple");
   };
 })();

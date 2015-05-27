@@ -3,42 +3,64 @@
     window.Game = {};
   }
 
-  SNAKESIZE = 2;
-  MAXX = 60;
-  MAXY = 60;
+  MAXX = 40;
+  MAXY = 30;
   SNAKEPOS = new Game.Coord(Math.floor(MAXX/2), Math.floor(MAXY/2));
 
   var Board = Game.Board = function() {
-    this.board = new Array(MAXX);
-    for (var row = 0; row < this.board.length; row++) {
-      this.board[row] = new Array(MAXY);
-    }
-    this.snake = new Game.Snake(this, SNAKESIZE, SNAKEPOS);
-    this.apples = [];
+    this.maxX = MAXX; // Use in view class for flatCoords calculation
+    this.grid = this.newGrid();
+    this.snake = new Game.Snake(this, SNAKEPOS);
+    this.apple = new Game.Apple(this, this.randomPos());
     this.updateBoard(SNAKEPOS);
   };
 
+  Board.prototype.newGrid = function () {
+    var grid = new Array(MAXX);
+    for (var row = 0; row < MAXX; row++) {
+      grid[row] = new Array(MAXY);
+    }
+
+    return grid;
+  };
+
   Board.prototype.updateBoard = function (tail) {
-    var x = tail.pos[0];
-    var y = tail.pos[1];
-    this.board[x][y] = undefined;
+    if (tail) {
+      var x = tail.x;
+      var y = tail.y;
+      this.grid[x][y] = undefined;
+    }
 
     for (var i = 0; i < this.snake.body.length; i++) {
-      var x = this.snake.body[i].pos[0];
-      var y = this.snake.body[i].pos[1];
-      this.board[x][y] = this.snake.body[i];
+      var snake_x = this.snake.body[i].x;
+      var snake_y = this.snake.body[i].y;
+      this.grid[snake_x][snake_y] = "S";
     }
+
+    var apple_x = this.apple.pos.x;
+    var apple_y = this.apple.pos.y;
+    this.grid[apple_x][apple_y] = "A";
   };
 
-  Board.prototype.render = function ($display) {
-    for (var row = 0; row < this.board.length; row++) {
-      for (var col = 0; col < this.board[row].length; col++) {
-        if(this.board[row][col] === undefined) {
-          $($($display.children()[row]).children()[col]).removeClass("snake")
-        } else {
-          $($($display.children()[row]).children()[col]).addClass("snake");
-        }
-      }
-    }
+  Board.prototype.randomPos = function () {
+    var randPos = new Game.Coord(Math.floor(Math.random() * MAXY), Math.floor(Math.random() * MAXX));
+    return randPos;
   };
+
+  Board.prototype.generateApple = function() {
+   var pos;
+   var isApple = false;
+   while (!isApple) {
+     pos = this.randomPos();
+     var x = pos.x;
+     var y = pos.y;
+     if (this.grid[x][y] !== "S") {
+       isApple = true;
+     }
+   }
+   var apple = new Game.Apple(this, pos);
+   this.apple = apple;
+  };
+
+
 })();

@@ -2,11 +2,12 @@ body, header, h1, section, article, div, ul, li {
   margin: 0;
   padding: 0;
   border: 0;
-
+  outline: 0;
   font:inherit;
   text-align: inherit;
   text-decoration: inherit;
-
+  color: inherit;
+  vertical-align: inherit;
   background: transparent;
 }
 
@@ -33,7 +34,7 @@ h1{
 .grid {
   display: block;
   width: 600px;
-  height: 600px;
+  height: 450px;
   margin: auto;
   border: 5px solid black;
 }
@@ -42,17 +43,21 @@ h1{
   display: block;
   float: left;
   width: 100%;
-  height: 10px;
+  height: 15px;
 }
 
 .grid > ul > li {
   display: block;
   float: left;
-  width: 8px;
-  height: 8px;
-  border: 1px solid black;
+  width: 15px;
+  height: 15px;
+  /*border: 1px solid black;*/
 }
 
 .snake {
   background: green;
+}
+
+.apple {
+  background: red;
 }

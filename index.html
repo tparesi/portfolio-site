@@ -1,6 +1,7 @@
 <html>
   <head>
     <script src="coords.js"></script>
+    <script src="apple.js"></script>
     <script src="snake.js"></script>
     <script src="board.js"></script>
     <script src="view.js"></script>
@@ -14,11 +15,8 @@
     </article>
   </body>
   <script type="text/javascript">
-    var $el = $(".grid");
-    var game = new Game.View($el);
-    setInterval(function() {
-      game.render();
-      game.update();
-      }, 20);
+    $(function () {
+      new Game.View($(".grid"));      
+    });
   </script>
 </html>
