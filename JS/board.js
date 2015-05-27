@@ -11,7 +11,7 @@
     this.maxX = MAXX; // Use in view class for flatCoords calculation
     this.grid = this.newGrid();
     this.snake = new Game.Snake(this, SNAKEPOS);
-    this.apple = new Game.Apple(this, this.randomPos());
+    this.generateApple();
     this.updateBoard(SNAKEPOS);
   };
 
@@ -26,20 +26,16 @@
 
   Board.prototype.updateBoard = function (tail) {
     if (tail) {
-      var x = tail.x;
-      var y = tail.y;
-      this.grid[x][y] = undefined;
+      this.grid[tail.x][tail.y] = undefined;
     }
 
     for (var i = 0; i < this.snake.body.length; i++) {
-      var snake_x = this.snake.body[i].x;
-      var snake_y = this.snake.body[i].y;
-      this.grid[snake_x][snake_y] = "S";
+      if (this.grid[this.snake.body[i].x]) {
+        this.grid[this.snake.body[i].x][this.snake.body[i].y] = "S";
+      }
     }
 
-    var apple_x = this.apple.pos.x;
-    var apple_y = this.apple.pos.y;
-    this.grid[apple_x][apple_y] = "A";
+    this.grid[this.apple.pos.x][this.apple.pos.y] = "A";
   };
 
   Board.prototype.randomPos = function () {
@@ -62,5 +58,7 @@
    this.apple = apple;
   };
 
-
+  Board.prototype.validPosition = function (coord) {
+    return (coord.x >= 0) && (coord.y >= 0) && (coord.x < MAXY) && (coord.y < MAXX);
+  };
 })();

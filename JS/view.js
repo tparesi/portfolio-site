@@ -21,9 +21,8 @@
   };
 
   View.prototype.setInt = function () {
-    setInterval(function() {
-      this.render();
-      this.board.snake.move();
+    this.intervalId = setInterval(function() {
+      this.endGameCheck();
     }.bind(this), 150);
   };
 
@@ -68,5 +67,15 @@
     var appleCoords = this.board.apple.pos;
     var appleFlatCoords = (appleCoords.x * this.board.maxX) + appleCoords.y;
     this.$li.eq(appleFlatCoords).addClass("apple");
+  };
+
+  View.prototype.endGameCheck = function () {
+    if (!this.board.validPosition(this.board.snake.head()) || this.board.snake.selfCollide()) {
+      clearInterval(this.intervalId);
+      alert("you lost");
+    } else {
+      this.render();
+      this.board.snake.move();
+    }
   };
 })();

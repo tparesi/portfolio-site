@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <script src="../js/coords.js"></script>
+    <script src="../js/apple.js"></script>
+    <script src="../js/snake.js"></script>
+    <script src="../js/board.js"></script>
+    <script src="../js/view.js"></script>
+    <script src="../js/jquery-2.1.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/snake.css">
+    <title>Snake</title>
+  </head>
+  <body>
+    <h1>Snake Game</h1>
+    <article class="grid group">
+    </article>
+  </body>
+  <script type="text/javascript">
+    $(function () {
+      new Game.View($(".grid"));
+    });
+  </script>
+</html>
