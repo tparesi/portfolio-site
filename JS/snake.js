@@ -10,13 +10,15 @@
     "E": new Game.Coord(0, 1)
   };
 
-  var Snake = Game.Snake = function(board, pos) {
+  var Snake = Game.Snake = function(board, pos, view) {
+    this.view = view;
     this.board = board;
     this.body = new Array();
     this.dir = DIR["E"];
     this.body.push(pos);
     this.body.push(pos.plus(this.dir));
     this.turning = false;
+    this.score = 0;
   };
 
   Snake.prototype.move = function () {
@@ -42,6 +44,11 @@
    if (this.board.grid[head.x][head.y] === "A") {
      this.board.apple = "S";
      this.board.generateApple();
+     this.score += 1;
+
+     if (this.score % 5 === 0) {
+       this.view.changeSpeed();
+     }
      return true;
    }
    return false;

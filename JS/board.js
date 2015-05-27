@@ -7,10 +7,10 @@
   MAXY = 30;
   SNAKEPOS = new Game.Coord(Math.floor(MAXX/2), Math.floor(MAXY/2));
 
-  var Board = Game.Board = function() {
+  var Board = Game.Board = function(view) {
     this.maxX = MAXX; // Use in view class for flatCoords calculation
     this.grid = this.newGrid();
-    this.snake = new Game.Snake(this, SNAKEPOS);
+    this.snake = new Game.Snake(this, SNAKEPOS, view);
     this.generateApple();
     this.updateBoard(SNAKEPOS);
   };

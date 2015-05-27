@@ -1,4 +1,4 @@
-body, header, h1, section, article, div, ul, li, h2 {
+body, header, h1, section, article, div, ul, li, h2, h3 {
   margin: 0;
   padding: 0;
   border: 0;
@@ -47,6 +47,32 @@ h2 {
   font-size: 36px;
   color: white;
   line-height: 450px;
+}
+
+.new-game-modal {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: grey;
+  font-size: 36px;
+  color: white;
+  line-height: 450px;
+  cursor: pointer;
+}
+
+.score {
+  position: absolute;
+  font-size: 24px;
+  top: -30px;
+}
+
+.points {
+  position: absolute;
+  top: 0;
+  right: -30px;
 }
 
 .grid {
