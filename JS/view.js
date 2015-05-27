@@ -9,6 +9,7 @@
     this.setUpGrid();
     this.bindKeys();
     this.setInt();
+    this.paused = false;
   };
 
   View.prototype.setUpGrid = function () {
@@ -49,6 +50,11 @@
           this.board.snake.turn("S");
         break;
 
+        case 80:
+          event.preventDefault();
+          this.pause();
+        break;
+
         default: return;
       }
     }.bind(this));
@@ -76,6 +82,18 @@
     } else {
       this.render();
       this.board.snake.move();
+    }
+  };
+
+  View.prototype.pause = function () {
+    if (this.paused) {
+      this.$el.find(".pause-modal").css("display", "none");
+      this.setInt();
+      this.paused = false;
+    } else {
+      clearInterval(this.intervalId);
+      this.$el.find(".pause-modal").css("display", "block");
+      this.paused = true;
     }
   };
 })();

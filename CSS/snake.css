@@ -1,4 +1,4 @@
-body, header, h1, section, article, div, ul, li {
+body, header, h1, section, article, div, ul, li, h2 {
   margin: 0;
   padding: 0;
   border: 0;
@@ -31,8 +31,27 @@ h1{
   text-align: center;
 }
 
+h2 {
+  font-size: 36px;
+  text-align: center;
+}
+
+.pause-modal {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: grey;
+  font-size: 36px;
+  color: white;
+  line-height: 450px;
+}
+
 .grid {
   display: block;
+  position: relative;
   width: 600px;
   height: 450px;
   margin: auto;
